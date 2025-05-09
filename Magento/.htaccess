@@ -1,0 +1,18 @@
+##############################################
+# Magento 2 Root .htaccess file (for subdirectory installation)
+##############################################
+
+# Enable rewrites
+RewriteEngine on
+
+# Set the base directory for rewrites
+RewriteBase /magento/
+
+# Redirect requests to appropriate paths
+RewriteCond %{REQUEST_URI} !^/magento/pub/
+RewriteCond %{REQUEST_URI} !^/magento/setup/
+RewriteCond %{REQUEST_URI} !^/magento/update/
+RewriteCond %{REQUEST_URI} !^/magento/dev/
+RewriteRule .* /magento/pub/$0 [L]
+
+DirectoryIndex index.php

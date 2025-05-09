@@ -1,0 +1,31 @@
+##############################################
+# Magento 2 Pub Directory .htaccess file
+##############################################
+
+# Enable rewrites
+Options +FollowSymLinks
+RewriteEngine on
+RewriteBase /magento/pub/
+
+# Handle authorization header
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# If the requested path and file don't exist, forward to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteRule .* index.php [L]
+
+# Prevent directory listing
+Options -Indexes
+
+# PHP memory limit
+<IfModule mod_php7.c>
+    php_value memory_limit 768M
+</IfModule>
+
+# Prevent .htaccess and .htpasswd files from being viewed
+<Files ~ "^\.ht">
+    Order allow,deny
+    Deny from all
+</Files>
